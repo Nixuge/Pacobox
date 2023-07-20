@@ -85,11 +85,8 @@ def wait_until_new_ip(initial_ip: str) -> Optional[str]:
 
         tries += 1
 
-        if tries > 20:
-            print("\nCouldn't get new IP in 20 pings.")
-            print("Check if either:")
-            print("- Your router rebooted but with the same IP")
-            print("- Your router crashed/isn't starting")
+        if tries > 20: 
+            print()
             return None
         
         time.sleep(5)
@@ -119,13 +116,17 @@ def main():
         print("Error happened while sending the request !")
         return
     
-
     new_ip = wait_until_new_ip(initial_ip)
     if new_ip:
         print(f"Got a new IP: {new_ip}")
         if conf["save_ip"]:
             with open("pacobox_ips.txt", "a") as pacobox_file:
                 pacobox_file.write(new_ip + "\n")
+    else:
+        print("Couldn't get new IP in 20 pings.")
+        print("Check if either:")
+        print("- Your router rebooted but with the same IP")
+        print("- Your router crashed/isn't starting")
 
 if __name__ == "__main__":
     try:
